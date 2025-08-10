@@ -1,50 +1,221 @@
-// 🔢 Calculator Logic
-const inputValue = document.getElementById("user-input");
-const number = document.querySelectorAll(".numbers");
-const calculate = document.querySelectorAll(".operations");
+/* Background & Layout */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffffff, #8f94fb);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-number.forEach(function (item) {
-  item.addEventListener("click", function (e) {
-    if (inputValue.innerText === "NaN") {
-      inputValue.innerText = "";
+.container {
+    width: 1500px;
+    max-width: 1290px;
+    margin: auto;
+    background: rgba(155, 200, 125, 0.15); /* हल्का ग्लास बैकग्राउंड */
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow:
+      0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-sizing: border-box;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.container:hover {
+    transform: translateZ(15px) rotateX(5deg) rotateY(5deg);
+    box-shadow:
+      0 12px 40px 0 rgba(31, 38, 135, 0.6);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.8rem;
+    color: #fff;
+    text-shadow:
+        2px 2px 5px rgba(0,0,0,0.6),
+        0 0 15px #8f94fb,
+        0 0 30px #4e54c8;
+    transform: translateZ(20px);
+    perspective: 500px;
+}
+
+/* 3D style for Application Form Heading */
+h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+    color: #333;
+    text-shadow:
+      1px 1px 3px rgba(255,255,255,0.9),
+      -1px -1px 5px rgba(0,0,0,0.1);
+    transform-style: preserve-3d;
+}
+
+/* Section with 3D look */
+section {
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.35), rgba(230,230,255,0.25));
+    box-shadow: 
+      5px 5px 20px rgba(0,0,0,0.2),    /* outer shadow */
+      -5px -5px 20px rgba(255,255,255,0.7), /* highlight */
+      inset 3px 3px 10px rgba(255,255,255,0.5), /* inner glow */
+      inset -3px -3px 10px rgba(0,0,0,0.1);    /* inner shadow */
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+}
+
+section:hover {
+    transform: rotateX(10deg) rotateY(10deg) translateZ(10px);
+    box-shadow:
+      10px 10px 40px rgba(0,0,0,0.3),
+      -10px -10px 40px rgba(255,255,255,0.9),
+      inset 6px 6px 15px rgba(255,255,255,0.8),
+      inset -6px -6px 15px rgba(0,0,0,0.15);
+}
+
+/* Form rows */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.row label {
+    flex: 1;
+    font-weight: bold;
+    min-width: 120px;
+    color: #222;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+}
+
+.row input, .row select {
+    flex: 2;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.25);
+    color: #222;
+    box-shadow:
+      inset 2px 2px 8px rgba(255,255,255,0.7),
+      inset -2px -2px 8px rgba(0,0,0,0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.row input:focus, .row select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow:
+      0 0 8px 3px rgba(78, 84, 200, 0.7);
+}
+
+/* Table styling */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 900px;
+    border-collapse: collapse;
+    margin-top: 10px;
+    min-width: 400px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 15px;
+    box-shadow:
+      5px 5px 15px rgba(0,0,0,0.2),
+      -5px -5px 15px rgba(255,255,255,0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+table th, table td {
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px;
+    text-align: center;
+    color: #222;
+}
+
+/* Declaration text */
+.declaration {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* Bottom row and buttons */
+.bottom-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.left-buttons button, 
+.right-side button, 
+.right-side input[type="submit"] {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+      4px 4px 12px rgba(0, 0, 0, 0.25),
+      -4px -4px 12px rgba(255, 255, 255, 0.7);
+    color: #4e54c8;
+    font-weight: 600;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 150px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
+}
+
+.left-buttons button:hover, 
+.right-side button:hover, 
+.right-side input[type="submit"]:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: #3b40a4;
+    box-shadow:
+      6px 6px 20px rgba(0, 0, 0, 0.4),
+      -6px -6px 20px rgba(255, 255, 255, 0.9);
+    transform: translateZ(10px);
+}
+
+/* Signature styling */
+.signature {
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 5px;
+    border-top: 1px solid #000;
+    padding-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
     }
-    if (inputValue.innerText === "0") {
-      inputValue.innerText = "";
+    .bottom-row {
+        flex-direction: column;
+        align-items: stretch;
     }
-    inputValue.innerText += e.target.innerHTML.trim();
-  });
-});
-
-calculate.forEach(function (item) {
-  item.addEventListener("click", function (e) {
-    let lastValue = inputValue.innerText.substring(inputValue.innerText.length, inputValue.innerText.length - 1);
-
-    if (!isNaN(lastValue) && e.target.innerHTML === "=") {
-      inputValue.innerText = eval(inputValue.innerText);
-    } else if (e.target.innerHTML === "AC") {
-      inputValue.innerText = 0;
-    } else if (e.target.innerHTML === "DEL") {
-      inputValue.innerText = inputValue.innerText.substring(0, inputValue.innerText.length - 1);
-      if (inputValue.innerText.length == 0) {
-        inputValue.innerText = 0;
-      }
-    } else {
-      if (!isNaN(lastValue)) {
-        inputValue.innerText += e.target.innerHTML;
-      }
-    }
-  });
-});
-
-// 📦 Register Service Worker (for PWA/offline)
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => {
-        console.log('✅ Service Worker registered:', reg.scope);
-      })
-      .catch(err => {
-        console.log('❌ Service Worker registration failed:', err);
-      });
-  });
 }
