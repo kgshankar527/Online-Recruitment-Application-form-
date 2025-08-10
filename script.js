@@ -1,56 +1,50 @@
-// आपका Google Apps Script Web App URL डालें
-const scriptURL = "YOUR_GOOGLE_SCRIPT_WEB_APP_URL";
+// 🔢 Calculator Logic
+const inputValue = document.getElementById("user-input");
+const number = document.querySelectorAll(".numbers");
+const calculate = document.querySelectorAll(".operations");
 
-document.getElementById("appForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    fetch(scriptURL, { method: "POST", body: formData })
-        .then(response => {
-            if (response.ok) {
-                alert("✅ Form submitted successfully!");
-                document.getElementById("appForm").reset();
-            } else {
-                alert("❌ Error submitting form.");
-            }
-        })
-        .catch(error => {
-            console.error("Error!", error);
-            alert("❌ Could not submit form.");
-        });
+number.forEach(function (item) {
+  item.addEventListener("click", function (e) {
+    if (inputValue.innerText === "NaN") {
+      inputValue.innerText = "";
+    }
+    if (inputValue.innerText === "0") {
+      inputValue.innerText = "";
+    }
+    inputValue.innerText += e.target.innerHTML.trim();
+  });
 });
 
-function exportPDF() {
-    const element = document.getElementById("applicationForm");
+calculate.forEach(function (item) {
+  item.addEventListener("click", function (e) {
+    let lastValue = inputValue.innerText.substring(inputValue.innerText.length, inputValue.innerText.length - 1);
 
-    const name = document.querySelector("input[name='name']").value.trim() || "Candidate";
-    const appNo = document.querySelector("input[name='appNo']").value.trim() || "AppNo";
-    const fileName = `${name}_${appNo}_Application.pdf`;
-
-    const opt = {
-        margin: 0.5,
-        filename: fileName,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    };
-
-    html2pdf().set(opt).from(element).save();
-}
-
-function shareForm() {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Recruitment Application Form',
-            text: 'Here is my application form.',
-            url: window.location.href
-        }).catch(console.error);
+    if (!isNaN(lastValue) && e.target.innerHTML === "=") {
+      inputValue.innerText = eval(inputValue.innerText);
+    } else if (e.target.innerHTML === "AC") {
+      inputValue.innerText = 0;
+    } else if (e.target.innerHTML === "DEL") {
+      inputValue.innerText = inputValue.innerText.substring(0, inputValue.innerText.length - 1);
+      if (inputValue.innerText.length == 0) {
+        inputValue.innerText = 0;
+      }
     } else {
-        alert("❌ Sharing not supported in this browser.");
+      if (!isNaN(lastValue)) {
+        inputValue.innerText += e.target.innerHTML;
+      }
     }
-}
+  });
+});
 
-function previewForm() {
-    alert("👀 Preview feature coming soon!");
-}
+// 📦 Register Service Worker (for PWA/offline)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => {
+        console.log('✅ Service Worker registered:', reg.scope);
+      })
+      .catch(err => {
+        console.log('❌ Service Worker registration failed:', err);
+      });
+  });
+            }
