@@ -1,0 +1,46 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f7f7f7;
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+}
+
+th {
+    background: #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+input, select {
+    width: 95%;
+    padding: 5px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background: green;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background: darkgreen;
+}

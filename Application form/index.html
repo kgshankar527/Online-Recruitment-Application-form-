@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Form</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<h2>Online Recruitment Portal</h2>
+<h3>Application Form</h3>
+
+<form id="appForm">
+<table>
+  <tr>
+    <th colspan="4">1. Recruitment Details</th>
+  </tr>
+  <tr>
+    <td>Post Applied</td>
+    <td><input type="text" name="post" required></td>
+    <td>Application No.</td>
+    <td><input type="text" name="appNo" required></td>
+  </tr>
+  <tr>
+    <td>Application Date</td>
+    <td><input type="date" name="appDate" required></td>
+    <td>UID</td>
+    <td><input type="text" name="UID" required></td>
+  </tr>
+
+  <tr>
+    <th colspan="4">2. Applicant's Details</th>
+  </tr>
+  <tr>
+    <td>Candidate Name</td>
+    <td><input type="text" name="name" required></td>
+    <td>Father's Name</td>
+    <td><input type="text" name="fatherName" required></td>
+  </tr>
+  <tr>
+    <td>Mother's Name</td>
+    <td><input type="text" name="motherName"></td>
+    <td>Gender</td>
+    <td>
+      <select name="gender">
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+    </td>
+  </tr>
+  <tr>
+    <td>Date of Birth</td>
+    <td><input type="date" name="dob"></td>
+    <td>Category</td>
+    <td><input type="text" name="category"></td>
+  </tr>
+
+  <tr>
+    <th colspan="4">3. Contact Details</th>
+  </tr>
+  <tr>
+    <td>Mobile No.</td>
+    <td><input type="text" name="mobile"></td>
+    <td>Email</td>
+    <td><input type="email" name="email"></td>
+  </tr>
+  <tr>
+    <td>Address</td>
+    <td colspan="3"><input type="text" name="address" style="width:100%;"></td>
+  </tr>
+
+  <tr>
+    <th colspan="4">4. Education Details</th>
+  </tr>
+  <tr>
+    <td>Qualification</td>
+    <td><input type="text" name="qualification"></td>
+    <td>Passing Year</td>
+    <td><input type="number" name="passingYear"></td>
+  </tr>
+  <tr>
+    <td>Marks Obtained</td>
+    <td><input type="number" name="marksObt"></td>
+    <td>Total Marks</td>
+    <td><input type="number" name="totalMarks"></td>
+  </tr>
+</table>
+
+<br>
+<input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
